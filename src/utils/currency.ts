@@ -25,7 +25,7 @@ export function formatCurrency(
 ) {
   const parsed = parseCurrency(currency);
 
-  // 1️⃣ Currency yok → plain number
+  // 1️⃣ No currency → plain number
   if (parsed.kind === "none") {
     return new Intl.NumberFormat(locale, {
       minimumFractionDigits: 2,
@@ -34,7 +34,7 @@ export function formatCurrency(
     }).format(amount);
   }
 
-  // 2️⃣ Code varsa → native & doğru
+  // 2️⃣ Code present → native & correct
   if (parsed.kind === "code") {
     try {
       return new Intl.NumberFormat(locale, {
@@ -52,7 +52,7 @@ export function formatCurrency(
   // 3️⃣ Symbol fallback (presentation-only)
   const parts = new Intl.NumberFormat(locale, {
     style: "currency",
-    currency: "USD", // sadece layout almak için
+    currency: "USD", // layout only
     minimumFractionDigits: 2,
     notation: "compact",
 

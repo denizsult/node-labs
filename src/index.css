@@ -278,7 +278,7 @@
   box-shadow: none !important;
 }
 
-/* Tooltip oklarını kapat */
+/* Hide tooltip arrows */
 .apexcharts-xaxistooltip:before,
 .apexcharts-xaxistooltip:after {
   display: none !important;

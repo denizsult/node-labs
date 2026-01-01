@@ -60,22 +60,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   }, []);
 
-  /* useEffect(() => {
-    if (token) {
-      getProfile()
-        .then((data) => {
-          if (data) {
-            setUser(data);
-          }
-        })
-        .catch((error) => {
-          removeStorageItem("user");
-          removeStorageItem("token");
-          window.location.href = "/sign-in";
-        });
-    }
-  }, [token]); */
-
   const value: AuthContextType = {
     user,
     token,

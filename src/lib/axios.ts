@@ -17,7 +17,7 @@ export const api = axios.create({
 });
 
 /**
- * Refresh kontrol değişkenleri
+ * Refresh control flags
  */
 let isRefreshing = false;
 
@@ -42,7 +42,7 @@ const processQueue = (error: AxiosError | null, token: string | null) => {
 
 /**
  * REQUEST INTERCEPTOR
- * Access token ekler
+ * Adds access token
  */
 api.interceptors.request.use((config) => {
   const token = getStorageItem<string>("token");
@@ -69,13 +69,13 @@ api.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    // refresh endpoint'i kendisi 401 alıyorsa → logout
+    // if refresh endpoint itself gets 401 → logout
     if (originalRequest.url?.includes("/auth/refresh")) {
       handleLogout();
       return Promise.reject(error);
     }
 
-    // sonsuz loop koruması
+    // infinite loop guard
     if (originalRequest._retry) {
       handleLogout();
       return Promise.reject(error);
@@ -83,7 +83,7 @@ api.interceptors.response.use(
 
     originalRequest._retry = true;
 
-    // başka bir refresh devam ediyorsa kuyruğa gir
+    // queue if another refresh is in flight
     if (isRefreshing) {
       return new Promise((resolve, reject) => {
         failedQueue.push({
@@ -124,14 +124,15 @@ api.interceptors.response.use(
 
 /**
  * Logout side-effect
- * UI bağımlılığı yok
+ * No UI dependency
  */
 function handleLogout() {
   removeStorageItem("token");
+  removeStorageItem("user")
 
-  // global event (istersen dinlersin)
+  // global event (listen if needed)
   window.dispatchEvent(new Event("auth:logout"));
 
   // redirect
-  window.location.href = "/login";
+  window.location.href = "/sign-in";
 }
