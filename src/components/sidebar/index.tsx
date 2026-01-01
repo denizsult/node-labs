@@ -1,4 +1,4 @@
-import { act, useMemo } from "react";
+import {  useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import { LogoIcon } from "@/components/icons";
 import { useLogout } from "@/features/auth/api/use-logout";
