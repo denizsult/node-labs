@@ -1,0 +1,17 @@
+export { ReactComponent as DashboardIcon } from "./dashboard.svg";
+export { ReactComponent as GoogleIcon } from "./google.svg";
+export { ReactComponent as HelpIcon } from "./help.svg";
+export { ReactComponent as MasterCardIcon } from "./master-card.svg";
+export { ReactComponent as InvoicesIcon } from "./invoices.svg";
+export { ReactComponent as LogoIcon } from "./logo.svg";
+export { ReactComponent as LogoutIcon } from "./logout.svg";
+export { ReactComponent as MyWalletsIcon } from "./my-wallets.svg";
+export { ReactComponent as SettingsIcon } from "./settings.svg";
+export { ReactComponent as TransactionsIcon } from "./transactions.svg";
+export { ReactComponent as VisaIcon } from "./visa.svg";
+export { ReactComponent as UnderlineIcon } from "./underline.svg";
+export { ReactComponent as NftIcon } from "./nft.svg";
+export { ReactComponent as SearchIcon } from "./search.svg";
+export { ReactComponent as BellIcon } from "./bell.svg";
+export { ReactComponent as CaretDownIcon } from "./caret-down.svg";
+export { ReactComponent as ChipIcon } from "./chip.svg";
