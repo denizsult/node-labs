@@ -11,7 +11,7 @@ export const ScheduledTransfersSection = () => {
   const transfers = scheduledTransfers?.transfers || [];
 
   return (
-    <section className="flex flex-col items-center lg:items-start gap-[30px] w-full lg:max-w-[354px]">
+    <section className="flex flex-col md:flex-row lg:flex-col items-center lg:items-start gap-[30px] w-full lg:max-w-[354px]">
       <ScheduledTransfersCardStack />
 
       <div className="flex flex-col items-start gap-[25px] w-full">

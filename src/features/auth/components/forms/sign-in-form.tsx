@@ -181,15 +181,17 @@ export const SignInForm = () => {
                   Don&apos;t have an account?
                 </span>
                 <span className="text-black">&nbsp;</span>
-                <span
-                  onClick={() => navigate("/sign-up")}
-                  className="text-sm font-medium text-[#1b212d] cursor-pointer hover:opacity-80 transition-opacity"
-                >
-                  Sign up
-                </span>
-              </p>
 
-              <UnderlineIcon className="absolute top-[22px] left-[157px] w-[45px] h-2" />
+                <div className="relative inline-block">
+                  <span
+                    onClick={() => navigate("/sign-up")}
+                    className="text-sm font-medium text-[#1b212d] cursor-pointer hover:opacity-80 transition-opacity"
+                  >
+                    Sign up
+                  </span>
+                  <UnderlineIcon className="absolute  top-5  h-2" />
+                </div>
+              </p>
             </div>
           </div>
         </form>

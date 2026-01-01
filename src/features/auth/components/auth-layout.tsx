@@ -2,15 +2,17 @@ import type { PropsWithChildren } from "react";
 
 export const AuthLayout = ({ children }: PropsWithChildren) => {
   return (
-    <main className="bg-white w-full min-h-[900px] h-screen flex">
-      <section className="flex-1 flex flex-col justify-center px-[135px] relative">
+    <main className="bg-white w-full  h-screen flex justify-center">
+      <section className="flex-1 flex flex-col justify-center items-center lg:items-stretch px-[50px] sm:px-[100px] lg:px-[135px] relative">
         <img
-          className="absolute top-10 left-[135px] w-[108px] h-[30px]"
+          className="absolute top-10   w-[108px] h-[30px]"
           alt="Logo"
           src="/images/auth/logo.svg"
+          loading="eager"
+
         />
 
-        <div className="flex flex-col gap-[25px] max-w-[404px] animate-fade-in delay-[0ms]">
+        <div className="flex flex-col gap-[25px]   lg:max-w-[404px] animate-fade-in delay-[0ms]">
           {children}
         </div>
       </section>

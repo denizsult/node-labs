@@ -177,15 +177,17 @@ export const SignUpForm = () => {
                   Already have an account?
                 </span>
                 <span className="text-black">&nbsp;</span>
-                <span
-                  onClick={() => navigate("/sign-in")}
-                  className="text-sm font-medium text-foreground cursor-pointer hover:opacity-80 transition-opacity"
-                >
-                  Sign in
-                </span>
-              </p>
 
-              <UnderlineIcon className="absolute top-[22px] left-[157px] w-[45px] h-2" />
+                <div className="relative inline-block">
+                  <span
+                    onClick={() => navigate("/sign-in")}
+                    className="text-sm font-medium text-foreground cursor-pointer hover:opacity-80 transition-opacity"
+                  >
+                    Sign in
+                  </span>
+                  <UnderlineIcon className="absolute  top-5  h-2" />
+                </div>
+              </p>
             </div>
           </div>
         </form>
