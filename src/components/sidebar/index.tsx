@@ -3,10 +3,16 @@ import { useLocation } from "react-router-dom";
 import { LogoIcon } from "@/components/icons";
 import { useLogout } from "@/features/auth/api/use-logout";
 import { useAuth } from "@/hooks/use-auth";
+import { cn } from "@/lib/utils";
 import { bottomNavItems, mainNavItems } from "./constants/nav-items";
 import { MenuItem } from "./partials/menu-item";
 
-export const Sidebar = () => {
+type SidebarProps = {
+  className?: string;
+  onNavigate?: () => void;
+};
+
+export const Sidebar = ({ className, onNavigate }: SidebarProps) => {
   const { mutateAsync: logoutMutation } = useLogout();
   const { setUser, setToken } = useAuth();
   const { pathname } = useLocation();
@@ -24,7 +30,12 @@ export const Sidebar = () => {
   };
 
   return (
-    <div className="h-screen animate-fade-in delay-[200ms] flex-shrink-0 sticky top-0 w-[250px]">
+    <div
+      className={cn(
+        "h-screen animate-fade-in delay-[200ms] flex-shrink-0 sticky top-0 w-[250px]",
+        className
+      )}
+    >
       <aside className="flex flex-col h-full justify-between pt-[30px] pb-[100px] px-[25px] bg-gray-1">
         <LogoIcon className="h-[30px] w-fit " />
 
@@ -36,6 +47,7 @@ export const Sidebar = () => {
                 item={item}
                 isActive={item.id === activeId}
                 variant="main"
+                onClick={onNavigate}
               />
             ))}
           </nav>
@@ -45,7 +57,12 @@ export const Sidebar = () => {
               <MenuItem
                 key={item.id}
                 item={item}
-                onClick={() => (item.id === "logout" ? handleLogout() : undefined)}
+                onClick={() => {
+                  if (item.id === "logout") {
+                    handleLogout();
+                  }
+                  onNavigate?.();
+                }}
                 variant="bottom"
               />
             ))}
