@@ -4,6 +4,7 @@ import {
   setStorageItem,
   removeStorageItem,
 } from "@/lib/local-storage";
+import { toast } from "sonner";
 
 /**
  * Axios instance
@@ -128,11 +129,14 @@ api.interceptors.response.use(
  */
 function handleLogout() {
   removeStorageItem("token");
-  removeStorageItem("user")
-
+  removeStorageItem("user");
+  toast.error("Your session has expired. Please sign in again.", {
+    position: "top-center",
+  });
   // global event (listen if needed)
   window.dispatchEvent(new Event("auth:logout"));
 
-  // redirect
-  window.location.href = "/sign-in";
+  setTimeout(() => {
+    window.location.href = "/sign-in";
+  }, 300);
 }

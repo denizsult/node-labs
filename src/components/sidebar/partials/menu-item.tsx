@@ -29,7 +29,7 @@ export const MenuItem = ({
           : "rounded-lg hover:bg-gray-2",
         isMainVariant && isActive && "bg-primary hover:bg-primary"
       )}
-      onClick={onClick}
+      onClick={item.disabled ? undefined : onClick}
     >
       <item.icon
         className={cn(

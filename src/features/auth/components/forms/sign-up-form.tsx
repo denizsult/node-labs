@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Form, FormField } from "@/components/ui/form";
-import { Field, FieldError, FieldLabel } from "@/components/ui/field";
+import { Field, FieldError, FieldLabel, FieldSet } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useRegister } from "../../api";
 import { signUpSchema } from "../../validation-schemas";
@@ -18,7 +18,7 @@ export const SignUpForm = () => {
 
   const form = useForm<SignUpFormData>({
     resolver: zodResolver(signUpSchema),
-    mode: "onBlur",
+    mode: "onChange",
     defaultValues: {
       fullName: "",
       email: "",
@@ -27,6 +27,9 @@ export const SignUpForm = () => {
   });
 
   const { mutate: registerMutation, isPending: isRegistering } = useRegister({
+    onSuccessMessage: "Your account has been created successfully. You can now log in with your credentials.",
+    onErrorMessage:"Something went wrong. Please try again.",
+
     onSuccess: (response) => {
       if (response.data) {
         navigate("/sign-in");
@@ -58,97 +61,117 @@ export const SignUpForm = () => {
           className="flex flex-col gap-5"
         >
           <div className="flex flex-col gap-[5px]">
-            <FormField
-              control={form.control}
-              name="fullName"
-              render={({ field }) => {
-                const error = form.formState.errors.fullName;
-                return (
-                  <Field data-invalid={!!error} className="flex flex-col gap-0">
-                    <div className="flex items-start gap-2.5 pl-0 pr-2.5 py-2.5">
-                      <FieldLabel
-                        htmlFor={field.name}
-                        className="text-sm font-medium text-foreground"
-                      >
-                        Full Name
-                      </FieldLabel>
-                    </div>
-                    <Input
-                      {...field}
-                      id={field.name}
-                      placeholder="John Doe"
-                      aria-invalid={!!error}
-                      className={`w-full h-auto px-5 py-4 rounded-[10px] border border-solid text-sm`}
-                    />
-                    <RenderIf condition={error}>
-                      <FieldError errors={[error]} className="text-sm   mt-1" />
-                    </RenderIf>
-                  </Field>
-                );
-              }}
-            />
+            <FieldSet disabled={isRegistering}>
+              <FormField
+                control={form.control}
+                name="fullName"
+                render={({ field }) => {
+                  const error = form.formState.errors.fullName;
+                  return (
+                    <Field
+                      data-invalid={!!error}
+                      className="flex flex-col gap-0"
+                    >
+                      <div className="flex items-start gap-2.5 pl-0 pr-2.5 py-2.5">
+                        <FieldLabel
+                          htmlFor={field.name}
+                          className="text-sm font-medium text-foreground"
+                        >
+                          Full Name
+                        </FieldLabel>
+                      </div>
+                      <Input
+                        {...field}
+                        id={field.name}
+                        placeholder="John Doe"
+                        aria-invalid={!!error}
+                        className={`w-full h-auto px-5 py-4 rounded-[10px] border border-solid text-sm`}
+                      />
+                      <RenderIf condition={error}>
+                        <FieldError
+                          errors={[error]}
+                          className="text-sm   mt-1"
+                        />
+                      </RenderIf>
+                    </Field>
+                  );
+                }}
+              />
 
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => {
-                const error = form.formState.errors.email;
-                return (
-                  <Field data-invalid={!!error} className="flex flex-col gap-0">
-                    <div className="flex items-start gap-2.5 pl-0 pr-2.5 py-2.5">
-                      <FieldLabel
-                        htmlFor={field.name}
-                        className="text-sm font-medium text-foreground"
-                      >
-                        Email
-                      </FieldLabel>
-                    </div>
-                    <Input
-                      {...field}
-                      id={field.name}
-                      type="email"
-                      placeholder="example@gmail.com"
-                      aria-invalid={!!error}
-                      className={`w-full h-auto px-5 py-4 rounded-[10px] border border-solid text-sm`}
-                    />
-                    <RenderIf condition={error}>
-                      <FieldError errors={[error]} className="text-sm   mt-1" />
-                    </RenderIf>
-                  </Field>
-                );
-              }}
-            />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => {
+                  const error = form.formState.errors.email;
+                  return (
+                    <Field
+                      data-invalid={!!error}
+                      className="flex flex-col gap-0"
+                    >
+                      <div className="flex items-start gap-2.5 pl-0 pr-2.5 py-2.5">
+                        <FieldLabel
+                          htmlFor={field.name}
+                          className="text-sm font-medium text-foreground"
+                        >
+                          Email
+                        </FieldLabel>
+                      </div>
+                      <Input
+                        {...field}
+                        id={field.name}
+                        type="email"
+                        placeholder="example@gmail.com"
+                        aria-invalid={!!error}
+                        className={`w-full h-auto px-5 py-4 rounded-[10px] border border-solid text-sm`}
+                      />
+                      <RenderIf condition={error}>
+                        <FieldError
+                          errors={[error]}
+                          className="text-sm   mt-1"
+                        />
+                      </RenderIf>
+                    </Field>
+                  );
+                }}
+              />
 
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => {
-                const error = form.formState.errors.password;
-                return (
-                  <Field data-invalid={!!error} className="flex flex-col gap-0">
-                    <div className="flex items-start gap-2.5 pl-0 pr-2.5 py-2.5">
-                      <FieldLabel
-                        htmlFor={field.name}
-                        className="text-sm font-medium text-foreground"
-                      >
-                        Password
-                      </FieldLabel>
-                    </div>
-                    <Input
-                      {...field}
-                      id={field.name}
-                      type="password"
-                      placeholder="********"
-                      aria-invalid={!!error}
-                      className={`w-full h-auto px-5 py-4 rounded-[10px] border border-solid text-sm`}
-                    />
-                    <RenderIf condition={error}>
-                      <FieldError errors={[error]} className="text-sm   mt-1" />
-                    </RenderIf>
-                  </Field>
-                );
-              }}
-            />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => {
+                  const error = form.formState.errors.password;
+                  return (
+                    <Field
+                      data-invalid={!!error}
+                      className="flex flex-col gap-0"
+                    >
+                      <div className="flex items-start gap-2.5 pl-0 pr-2.5 py-2.5">
+                        <FieldLabel
+                          htmlFor={field.name}
+                          className="text-sm font-medium text-foreground"
+                        >
+                          Password
+                        </FieldLabel>
+                      </div>
+                      <Input
+                        {...field}
+                        id={field.name}
+                        type="password"
+                        placeholder="********"
+                        aria-invalid={!!error}
+                        className={`w-full h-auto px-5 py-4 rounded-[10px] border border-solid text-sm`}
+                      />
+                      <RenderIf condition={error}>
+                        <FieldError
+                          errors={[error]}
+                          className="text-sm   mt-1"
+                        />
+                      </RenderIf>
+                    </Field>
+                  );
+                }}
+              />
+            </FieldSet>
           </div>
 
           <div className="flex flex-col items-center gap-[25px]">

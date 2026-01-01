@@ -10,8 +10,10 @@ import { BellIcon, CaretDownIcon, SearchIcon } from "./icons";
 import { useSidebarStore } from "@/store/sidebar-store";
 import { useLogout } from "@/features/auth";
 import { useAuth } from "@/providers";
+import { usePageStore } from "@/store/page-store";
 
 export const Header = () => {
+  const pageTitle = usePageStore(state => state.title)
   const {mutateAsync:logoutMutation} = useLogout()
   const {setToken, setUser} = useAuth()
   const onOpenMobileSidebar = useSidebarStore((state) => state.open);
@@ -41,7 +43,7 @@ export const Header = () => {
           </Button>
 
           <h1 className=" font-semibold text-colortext-1 text-[25px]">
-            Dashboard
+            {pageTitle}
           </h1>
         </div>
 

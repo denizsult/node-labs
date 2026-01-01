@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { ResponsiveLine } from "@nivo/line";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -149,7 +149,7 @@ export const WorkingCapitalChart = () => {
             </div>
 
             <Select value={period} onValueChange={setPeriod}>
-              <SelectTrigger className="w-[140px] h-9 bg-gray-100 rounded-md border-none shadow-none" >
+              <SelectTrigger className="w-[140px] h-9 bg-gray-100 rounded-md border-none shadow-none">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>

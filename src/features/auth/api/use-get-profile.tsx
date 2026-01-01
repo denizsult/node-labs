@@ -1,5 +1,5 @@
 import { api } from "@/lib/axios";
-import { useQuery, type QueryFunctionContext } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import type { ApiResponse, UserResponse } from "../types";
 
 export const getProfile = async () => {

@@ -11,6 +11,7 @@ import {
   FieldError,
   FieldGroup,
   FieldLabel,
+  FieldSet,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -29,7 +30,7 @@ export const SignInForm = () => {
 
   const form = useForm<SignInFormData>({
     resolver: zodResolver(signInSchema),
-    mode: "onBlur",
+    mode: "onChange",
     defaultValues: {
       email: "",
       password: "",
@@ -37,6 +38,8 @@ export const SignInForm = () => {
   });
 
   const { mutate: loginMutation, isPending: isLoggingIn } = useLogin({
+    onSuccessMessage:"Login Successful",
+    onErrorMessage:"Something went wrong. Please try again.",
     onSuccess: (response) => {
       if (response.data) {
         setUser(response.data.user);
@@ -68,91 +71,96 @@ export const SignInForm = () => {
           className="flex flex-col gap-[25px]"
         >
           <div className="flex flex-col gap-5">
-            <FieldGroup className="flex flex-col gap-[5px]">
-              <Controller
-                name="email"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <Field
-                    data-invalid={fieldState.invalid}
-                    className="flex flex-col gap-0"
-                  >
-                    <div className="flex items-start gap-2.5 pl-0 pr-2.5 py-2.5">
-                      <FieldLabel
-                        htmlFor="sign-in-email"
-                        className="text-sm font-medium text-colortext-1"
-                      >
-                        Email
-                      </FieldLabel>
-                    </div>
+            <FieldSet disabled={isLoggingIn}>
+              <FieldGroup className="flex flex-col gap-[5px]">
+                <Controller
+                  name="email"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <Field
+                      data-invalid={fieldState.invalid}
+                      className="flex flex-col gap-0"
+                    >
+                      <div className="flex items-start gap-2.5 pl-0 pr-2.5 py-2.5">
+                        <FieldLabel
+                          htmlFor="sign-in-email"
+                          className="text-sm font-medium text-colortext-1"
+                        >
+                          Email
+                        </FieldLabel>
+                      </div>
 
-                    <Input
-                      {...field}
-                      id="sign-in-email"
-                      type="email"
-                      placeholder="example@gmail.com"
-                      aria-invalid={fieldState.invalid}
-                      className="w-full h-auto px-5 py-4 rounded-[10px] border border-solid border-[#f2f2f2] text-sm text-colortext-3"
-                    />
-                    <RenderIf condition={fieldState.invalid}>
-                      <FieldError
-                        errors={[fieldState.error]}
-                        className="text-sm  mt-1"
-                      />
-                    </RenderIf>
-                  </Field>
-                )}
-              />
-
-              <Controller
-                name="password"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <Field
-                    data-invalid={fieldState.invalid}
-                    className="flex flex-col gap-0"
-                  >
-                    <div className="flex items-start gap-2.5 pl-0 pr-2.5 py-2.5">
-                      <Label
-                        htmlFor="sign-in-password"
-                        className="text-sm font-medium text-colortext-1"
-                      >
-                        Password
-                      </Label>
-                    </div>
-
-                    <div className="relative w-full">
                       <Input
                         {...field}
-                        id="sign-in-password"
-                        type={showPassword ? "text" : "password"}
-                        placeholder="••••••••"
+                        id="sign-in-email"
+                        type="email"
+                        placeholder="example@gmail.com"
                         aria-invalid={fieldState.invalid}
-                        className="w-full h-auto px-5 py-4 pr-12 rounded-[10px] border border-solid border-[#f2f2f2] text-sm text-colortext-3"
+                        disabled={isLoggingIn}
+                        className="w-full h-auto px-5 py-4 rounded-[10px] border border-solid border-[#f2f2f2] text-sm text-colortext-3"
                       />
-                      <button
-                        type="button"
-                        onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 text-colortext-3 hover:text-colortext-1 transition-colors"
-                      >
-                        <RenderIf condition={showPassword}>
-                          <EyeOff className="w-5 h-5" />
-                        </RenderIf>
-                        <RenderIf condition={!showPassword}>
-                          <Eye className="w-5 h-5" />
-                        </RenderIf>
-                      </button>
-                    </div>
-                    <RenderIf condition={fieldState.invalid}>
-                      <FieldError
-                        errors={[fieldState.error]}
-                        className="text-sm  mt-1"
-                      />
-                    </RenderIf>
-                  </Field>
-                )}
-              />
-            </FieldGroup>
+                      <RenderIf condition={fieldState.invalid}>
+                        <FieldError
+                          errors={[fieldState.error]}
+                          className="text-sm  mt-1"
+                        />
+                      </RenderIf>
+                    </Field>
+                  )}
+                />
+
+                <Controller
+                  name="password"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <Field
+                      data-invalid={fieldState.invalid}
+                      className="flex flex-col gap-0"
+                    >
+                      <div className="flex items-start gap-2.5 pl-0 pr-2.5 py-2.5">
+                        <Label
+                          htmlFor="sign-in-password"
+                          className="text-sm font-medium text-colortext-1"
+                        >
+                          Password
+                        </Label>
+                      </div>
+
+                      <div className="relative w-full">
+                        <Input
+                          {...field}
+                          id="sign-in-password"
+                          type={showPassword ? "text" : "password"}
+                          placeholder="••••••••"
+                          aria-invalid={fieldState.invalid}
+                          disabled={isLoggingIn}
+                          className="w-full h-auto px-5 py-4 pr-12 rounded-[10px] border border-solid border-[#f2f2f2] text-sm text-colortext-3"
+                        />
+                        <button
+                          type="button"
+                          disabled={isLoggingIn}
+                          onClick={() => setShowPassword(!showPassword)}
+                          className="absolute right-4 top-1/2 -translate-y-1/2 text-colortext-3 hover:text-colortext-1 transition-colors"
+                        >
+                          <RenderIf condition={showPassword}>
+                            <EyeOff className="w-5 h-5" />
+                          </RenderIf>
+                          <RenderIf condition={!showPassword}>
+                            <Eye className="w-5 h-5" />
+                          </RenderIf>
+                        </button>
+                      </div>
+                      <RenderIf condition={fieldState.invalid}>
+                        <FieldError
+                          errors={[fieldState.error]}
+                          className="text-sm  mt-1"
+                        />
+                      </RenderIf>
+                    </Field>
+                  )}
+                />
+              </FieldGroup>
+            </FieldSet>
           </div>
 
           <div className="flex flex-col items-center gap-[25px]">
@@ -160,6 +168,7 @@ export const SignInForm = () => {
               <Button
                 type="submit"
                 loading={isLoggingIn}
+                disabled={isLoggingIn}
                 className="w-full h-auto px-5 py-3.5 bg-primary rounded-[10px] text-base font-semibold text-colortext-1 text-center hover:bg-primary-color/90 transition-colors"
               >
                 Sign In
@@ -168,6 +177,7 @@ export const SignInForm = () => {
               <Button
                 type="button"
                 variant="outline"
+                disabled={isLoggingIn}
                 className="w-full h-auto p-[13px] rounded-[10px] border border-solid border-neutral-100 text-base font-semibold text-colortext-3 hover:bg-neutral-50 transition-colors"
               >
                 <GoogleIcon className="w-6 h-6" />

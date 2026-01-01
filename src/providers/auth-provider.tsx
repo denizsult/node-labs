@@ -4,14 +4,12 @@ import {
   useState,
   useCallback,
   type ReactNode,
-  useEffect,
 } from "react";
 import {
   getStorageItem,
   setStorageItem,
   removeStorageItem,
 } from "@/lib/local-storage";
-import { getProfile } from "@/features/auth/api/use-get-profile";
 
 type User = {
   id: string;

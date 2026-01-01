@@ -10,7 +10,10 @@ export type MutationConfig<
   Awaited<ReturnType<MutationFnType>>,
   Error,
   Parameters<MutationFnType>[0]
->;
+> & {
+  onSuccessMessage?: string;
+  onErrorMessage?: string;
+};
 
 export type QueryConfig<QueryFnType extends (...args: any[]) => Promise<any>> =
   UseQueryOptions<Awaited<ReturnType<QueryFnType>>, Error>;

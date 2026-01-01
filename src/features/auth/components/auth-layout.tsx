@@ -12,7 +12,7 @@ export const AuthLayout = ({ children }: PropsWithChildren) => {
 
         />
 
-        <div className="flex flex-col gap-[25px]   lg:max-w-[404px] animate-fade-in delay-[0ms]">
+        <div className="flex flex-col gap-[25px]  w-full md:max-w-[440px]   animate-fade-in delay-[0ms]">
           {children}
         </div>
       </section>

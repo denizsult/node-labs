@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { act, useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import { LogoIcon } from "@/components/icons";
 import { useLogout } from "@/features/auth/api/use-logout";
@@ -6,6 +6,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
 import { bottomNavItems, mainNavItems } from "./constants/nav-items";
 import { MenuItem } from "./partials/menu-item";
+import { usePageStore } from "@/store/page-store";
 
 type SidebarProps = {
   className?: string;
@@ -13,6 +14,7 @@ type SidebarProps = {
 };
 
 export const Sidebar = ({ className, onNavigate }: SidebarProps) => {
+  const setPageTitle = usePageStore((state) => state.setTitle);
   const { mutateAsync: logoutMutation } = useLogout();
   const { setUser, setToken } = useAuth();
   const { pathname } = useLocation();
@@ -27,6 +29,17 @@ export const Sidebar = ({ className, onNavigate }: SidebarProps) => {
     setUser(null);
     setToken(null);
     window.location.href = "/sign-in";
+  };
+
+  const handleNavigate = (nextId?: string) => {
+    onNavigate?.();
+    const menu = [...mainNavItems, ...bottomNavItems];
+    const targetId = nextId ?? activeId;
+    const activePage = menu.find((item) => item.id === targetId)?.label;
+
+    if (activePage) {
+      setPageTitle(activePage);
+    }
   };
 
   return (
@@ -47,7 +60,7 @@ export const Sidebar = ({ className, onNavigate }: SidebarProps) => {
                 item={item}
                 isActive={item.id === activeId}
                 variant="main"
-                onClick={onNavigate}
+                onClick={() => handleNavigate(item.id)}
               />
             ))}
           </nav>
@@ -61,8 +74,8 @@ export const Sidebar = ({ className, onNavigate }: SidebarProps) => {
                   if (item.id === "logout") {
                     handleLogout();
                   }
-                  onNavigate?.();
-                }}
+                  handleNavigate(item.id);
+                  }}
                 variant="bottom"
               />
             ))}
