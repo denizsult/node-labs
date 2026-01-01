@@ -18,7 +18,7 @@ This project is a dashboard built with a feature-based structure inspired by Bul
 ## Architecture Notes
 - Feature-based structure inspired by Bulletproof React (auth, dashboard domains).
 - Auth config is interceptor-driven; token attach, 401 refresh, and logout flow live in `src/lib/axios.ts`. Session expiry notifies the user with a toast.
-- Mutations can show dynamic toasts via `onSuccessMessage` / `onErrorMessage` and refetch data via `refetchQueries` in `useExtendedMutation`.
+- Mutations can show dynamic toasts via `onSuccessMessage` / `onErrorMessage` in `useExtendedMutation`.
 - ErrorBoundary Provider (`src/providers/error-boundary-provider.tsx`) wraps the app at the root (`src/main.tsx`); `ErrorPage` (`src/components/error-page.tsx`) is the default fallback.
 - Shared UI/layout pieces live under `src/components`; feature-specific components under `src/features`.
 - A mobile-menu sidebar was added for better mobile UX.
